@@ -1,0 +1,76 @@
+site-diary/
+├── public/
+│   └── index.html
+├── src/
+│   ├── App.js  // src/App.js
+import { useState } from "react";
+
+export default function SiteDiaryApp() {
+  const [form, setForm] = useState({
+    projectName: "",
+    date: "",
+    weather: "",
+    workers: "",
+    visitors: "",
+    tasks: "",
+    equipment: "",
+    materials: "",
+    safety: "",
+    issues: "",
+    comments: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Diary submitted!\\n\\n" + JSON.stringify(form, null, 2));
+  };
+
+  return (
+    <div className="p-4 max-w-xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Site Diary</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {[
+          ["projectName", "Project Name"],
+          ["date", "Date"],
+          ["weather", "Weather Conditions"],
+          ["workers", "Site Personnel"],
+          ["visitors", "Visitors"],
+          ["tasks", "Work Performed"],
+          ["equipment", "Plant & Equipment Used"],
+          ["materials", "Materials Delivered"],
+          ["safety", "Safety & Incidents"],
+          ["issues", "Issues & Delays"],
+          ["comments", "Supervisor Comments"],
+        ].map(([name, label]) => (
+          <div key={name}>
+            <label className="block font-semibold mb-1" htmlFor={name}>
+              {label}
+            </label>
+            <textarea
+              id={name}
+              name={name}
+              value={form[name]}
+              onChange={handleChange}
+              className="w-full p-2 border rounded"
+              rows={name === "comments" ? 3 : 2}
+            />
+          </div>
+        ))}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+        >
+          Submit Diary
+        </button>
+      </form>
+    </div>
+  );
+}
+
+│   └── index.js
+├── package.json
